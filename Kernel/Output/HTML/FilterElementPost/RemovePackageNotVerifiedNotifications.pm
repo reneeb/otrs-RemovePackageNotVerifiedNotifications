@@ -38,12 +38,23 @@ sub Run {
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $Text         = $LayoutObject->{LanguageObject}->Translate('Package not verified');
+    my $AlternativeText =
+        $LayoutObject->{LanguageObject}
+            ->Translate('Package not verified by the OTRS Group! It is recommended not to use this package.');
 
     $LayoutObject->AddJSOnDocumentComplete(
         Code => qq~
             \$('.MessageBox').each( function() {
-                if ( \$(this).hasClass('Error') && \$(this).find('p').match(/$Text/) ) {
-                    \$(this).addClass('Hidden');
+                if ( \$(this).hasClass('Error') ) {
+                    var Notification = \$(this);
+
+                    \$(this).find('p').each( function() {
+                        var NotificationText = \$(this).text();
+
+                        if ( NotificationText.match(/$Text/) || NotificationText.match(/$AlternativeText/) ) {
+                            Notification.addClass('Hidden');
+                        }
+                    });
                 }
             });
         ~,
