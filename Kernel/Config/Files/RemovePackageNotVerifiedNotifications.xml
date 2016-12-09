@@ -10,7 +10,7 @@
                 <Item Key="Debug">0</Item>
                 <Item Key="Templates">
                     <Hash>
-                        <Item Key="AgentPackageManager">1</Item>
+                        <Item Key="AdminPackageManager">1</Item>
                     </Hash>
                 </Item>
             </Hash>
